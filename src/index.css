@@ -1,0 +1,19 @@
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: rgb(24, 24, 27) !important;
+}
+.comma:first-child:before {
+  content: "";
+}
+.comma::before {
+  content: ", ";
+}
+
+html {
+	scroll-behavior: smooth
+}
