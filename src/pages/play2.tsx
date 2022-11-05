@@ -57,7 +57,11 @@ export default function PlayingPage() {
 		.map((v) => v[0]);
 		console.log(input, okays);
 		if (okays.includes(input)) {
-			setState(1);
+			if (newHiragana.length == 1) {
+				setState(3);
+			} else {
+				setState(1);
+			}
 			delete newHiragana[input];
 			inputRef!.value = "";
 			setScore(score() + 1);
