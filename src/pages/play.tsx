@@ -2,8 +2,19 @@ import { Component, createSignal, Match, onMount, Switch } from "solid-js";
 import { jpchars } from "../utils/jpchars";
 import { randomNumber } from "../utils/rnd";
 
+const initHiScore = () => {
+	let hiScore: number;
+	if (typeof localStorage !== "undefined" && localStorage.getItem("hiScore1")) {
+		hiScore = parseInt(localStorage.getItem("hiScore1") as string);
+	} else {
+		hiScore = 0;
+	}
+	return hiScore;
+}
+
 export default function PlayingPage() {
 	let [score, setScore] = createSignal(0);
+	let [hiScore, setHiScore] = createSignal(initHiScore())
 
 	let [char, setChar] = createSignal(["?", "?"]);
 	let getChar = () => {
@@ -49,6 +60,10 @@ export default function PlayingPage() {
 			setState(1);
 			inputRef!.value = "";
 			setScore(score() + 1);
+			if (hiScore() < score()) {
+				setHiScore(score());
+				localStorage.setItem("hiScore1", score().toString());
+			}
 			setTimeout(() => {
 				SetPlayState();
 				setTimeout(() => {
@@ -76,6 +91,11 @@ export default function PlayingPage() {
 					<div class="sticky">
 
 						<div class="flex flex-col items-center justify-center mb-8">
+							<h3 class="text-neutral-200 text-2xl tracking-widest">
+								HIGH-SCORE
+							</h3>
+							<h3 class="text-pink-200 text-md">{hiScore()}</h3>
+							<br></br>
 							<h3 class="text-neutral-200 text-2xl tracking-widest">
 								SCORE
 							</h3>
